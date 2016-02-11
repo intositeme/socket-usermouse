@@ -17,6 +17,5 @@ Broadcast any user mousemove events.
 **Dependencies**
 
 * "[express](https://www.npmjs.com/package/express)": "^4.10.2"
-* "[johnny-five](https://github.com/rwaldron/johnny-five)": "^0.9.18"
 * "[socket.io](http://socket.io/)": "^1.4.4"
 
