@@ -2,11 +2,10 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var ArduinoConnection = require('./arduinoConnection');
-var aC = new ArduinoConnection();
-
 var connectedUsers = 0;
 var clients = [];
+
+var PORT = 13000;
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/src/index.html');
@@ -14,26 +13,28 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	connectedUsers++;
+	socket.emit('connected', {id:socket.id, msg:"connected", others: clients } );
+
 	clients.push(socket.id);
-	console.log('user connected', clients);
+	io.emit('new-user', socket.id );
 
 	socket.on('disconnect', function(){
 		removeClient(socket.id);
-		console.log('user disconnected',clients);
-		io.emit('event', "-- someone disconnected" );
+		io.emit('user-quit', socket.id );
 	});
 
 	socket.on('event', function(msg){
 		io.emit('event', msg );
 	});
 
-	aC.on ('data', function (msg) {
-		io.emit('event',  msg );
+	socket.on('mouse-event', function(msg){
+		io.emit('mouse-event', msg );
 	});
+
 });
 
-http.listen(13000, function(){
-  console.log('listening on *:13000');
+http.listen(PORT, function(){
+  	console.log('listening on *:' + PORT);
 });
 
 function removeClient (id) {

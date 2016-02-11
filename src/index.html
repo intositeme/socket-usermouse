@@ -1,53 +1,62 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO - Arduiono</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { width:100%; height: 100% }
-      body { width:100%; height: 100% }
-      .holder { width: 400% ; height: 100% }
-      .boxy { width: 25% ; height: 100%; float: left; }
-      .box1 { background-color: blue; }
-      .box2 { background-color: green; }
-      .box3 { background-color: red; }
-      .box4 { background-color: black; }
-    </style>
-  </head>
-  <body>
-    <div class="holder">
-      <div class="boxy box1"></div>
-      <div class="boxy box2"></div>
-      <div class="boxy box3"></div>
-      <div class="boxy box4"></div>
-    </div>
+	<head>
+		<title>Socket.IO</title>
+		<link href='https://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'>
+		<style>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			html { width:100%; height: 100% }
+			body { width:100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+			.holder { justify-content: center; }
+			h1 { text-align: center; font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 4rem;}
+			h2 { text-align: center; font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 1rem; transition: font-size .3s ease; padding-top: 20px;}
+			span {
+				margin: -2rem 0;
+				color: #F2F3F5;
+				-webkit-align-self: center;
+				-ms-flex-item-align: center;
+				align-self: center;
+				font-size: 3rem;
+				letter-spacing: 0rem;
+				-webkit-transition: font-size .3s ease;
+				transition: font-size .3s ease;
+				text-shadow: 0px 0px 0 #83B4D8, -1px 1px 0 #83B4D8, -2px 2px 0 #83B4D8, -3px 3px 0 #83B4D8, -4px 4px 0 #83B4D8, -5px 5px 0 #83B4D8, -6px 6px 0 #83B4D8, -7px 7px 0 #6A93B0, -8px 8px 0 #6A93B0, -9px 9px 0 #6A93B0, -10px 10px 0 #263238, -11px 11px 0 #263238, -12px 12px 0 #263238, -13px 13px 0 #263238, -14px 14px 0 #263238, -15px 15px 0 #263238, -16px 16px 0 #263238, -17px 17px 0 rgba(0, 0, 0, 0.19), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.25), 0 3px 5px rgba(0, 0, 0, 0.28), 0 5px 10px rgba(0, 0, 0, 0.35), 0 10px 15px rgba(0, 0, 0, 0.4), 0 20px 20px rgba(0, 0, 0, 0.45);
+			}
+			@media screen and (min-width: 480px) {
+			    span { font-size: 3rem; }
+			    h2 { font-size: 1.5rem;  padding-top: 20px;}
+			}
+			@media screen and (min-width: 768px) {
+			    span { font-size: 6rem; }
+			    h2 { font-size: 2rem; padding-top: 0px;}
+			}
+			@media screen and (min-width: 1024px) {
+			    span { font-size: 9rem; }
+			    h2 { font-size: 3rem; padding-top: 0px; }
+			}
+			span.one {
+				-webkit-transform: rotate(-26deg);
+				transform: rotate(-26deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="holder">
+			<h1><span>Socket.io</span></h1>
+			<h2>Broadcast connected users' Mouse position</h2>
+		</div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-      var socket = io();
-      var goX = 0;
-      var tW = $(document).width();
-      var win = $(window);
-      socket.on('event', function(msg){
-        // if (msg == "left") {
-        //   $(window).scrollLeft(  $(window).scrollLeft( ) + 50 );
-        // } else {
-        //   $(window).scrollLeft(  $(window).scrollLeft( ) - 50 );
-        // }
-        goX = tW * Math.min(msg, 70)/60;
-        
-      });
-      
-      win[0].requestAnimationFrame(update);
-
-      function update () {
-        var tX = $(window).scrollLeft() + (goX - $(window).scrollLeft() ) /6;
-        // $(window).scrollLeft(  tX  );
-        win.scrollLeft(  tX  );
-        win[0].requestAnimationFrame(update);
-        // console.log('update', tX); 
-      }
-    </script>
-  </body>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+			var socket = io();
+			var win = $(window);
+			var mySocketID = null;
+			socket.on('event', function(msg){
+				// Socket event - custom methods here
+				mySocketID = msg.id;
+				// console.log('socket event', mySocketID); 
+			});
+		</script>
+	</body>
 </html>
