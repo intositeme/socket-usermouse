@@ -1,16 +1,16 @@
-##Arduino - Socket.io / Test
+##SocketIO - Broadcast User Connection
 
-**Arduino hooked up to Node.js Server via USB.**
 
-**Arduino needs to use custom PingFirmata**
+Return's User a socket ID when connected & IDs of any other connections.
 
-Arduino HC-SR04 Sonar pin **7** scrolls html page left/right.
+Broadcast any user mousemove events.
+
 
 **Start Up**
 
 1. `npm install`
 2. `node index.js`
-3. Go to browser and load up [http://localhost:3000](http://localhost:3000)
+3. Go to browser and load up [http://localhost:13000](http://localhost:13000)
 
 
 
